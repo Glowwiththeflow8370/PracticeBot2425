@@ -4,9 +4,10 @@
 
 package frc.robot.subsystems;
 
-import edu.wpi.first.wpilibj.drive.DifferentialDrive;
+//import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import com.revrobotics.CANSparkMax;
+import com.revrobotics.CANSparkBase.IdleMode;
 import com.revrobotics.CANSparkLowLevel.MotorType;
 
 // Constants import
@@ -21,7 +22,7 @@ public class DT extends SubsystemBase {
   private final CANSparkMax leftFront;
   private final CANSparkMax leftBack;
 
-  private final DifferentialDrive m_Drive;
+  //private final DifferentialDrive m_Drive;
 
   public DT() {
     // Create motor objects
@@ -34,26 +35,33 @@ public class DT extends SubsystemBase {
     leftFront.setInverted(true);
     leftBack.setInverted(true); 
 
-    // Group motor objects into Differential Drive
-    m_Drive = new DifferentialDrive(
-      // Sets the right motors
-      (double output) -> 
-      {rightFront.set(output);
-      rightBack.set(output);}, 
-      // Sets the left motors
-      (double output) -> 
-      {leftFront.set(output);
-      leftBack.set(output);});
-  }
+    rightFront.setSmartCurrentLimit(30);
+    rightBack.setSmartCurrentLimit(30);
 
-  // Drive method
-  public void arcadeDrive(double contX, double contY){
-      m_Drive.arcadeDrive(contX, contY);
+
+    leftFront.setSmartCurrentLimit(30);
+    leftBack.setSmartCurrentLimit(30);
+
+    rightFront.setIdleMode(IdleMode.kCoast);
+    rightBack.setIdleMode(IdleMode.kCoast);
+    leftFront.setIdleMode(IdleMode.kCoast);
+    leftBack.setIdleMode(IdleMode.kCoast);
+    // Saves configs
+    rightFront.burnFlash();
+    rightBack.burnFlash();
+
+    leftFront.burnFlash();
+    leftBack.burnFlash();
   }
+  // Drive method
+
 
   // This is most likely redundant?
-  public void resetMotors(){
-    m_Drive.tankDrive(0,0);
+  public void tank(double rfOut, double lfOut, double rbOut, double lbOut) {
+    rightFront.set(rfOut*2);
+    rightBack.set(lfOut*2);
+    leftFront.set(-rbOut*2);
+    leftBack.set(-lbOut*2);
   }
 
   // Note to self: Figure out how to use Encoders :P
@@ -62,14 +70,6 @@ public class DT extends SubsystemBase {
   public void periodic() {
     // This method will be called once per scheduler run
     // Stops the motors?
-    System.out.println("Doing checks");
-
-    /*
-    // Add these if nessecary
-    rightFront.set(0);
-    rightBack.set(0);
-    leftFront.set(0);
-    leftBack.set(0);
-     */
+    //System.out.println("Doing checks");
   }
 }
