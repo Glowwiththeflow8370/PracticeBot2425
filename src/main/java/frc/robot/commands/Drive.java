@@ -16,8 +16,7 @@ public class Drive extends Command {
   /** Creates a new Drive. */
   private final DT m_Drive;
   private final CommandPS4Controller dController;
-
-  //private double startTime;
+  private double startTime;
 
   Timer m_Timer = new Timer();
 
@@ -27,8 +26,8 @@ public class Drive extends Command {
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(Robot.m_DriveDT);
 
-    //m_Timer.start();
-    //startTime = Timer.getFPGATimestamp();
+    m_Timer.start();
+    startTime = Timer.getFPGATimestamp();
   }
 
   // Called when the command is initially scheduled.
@@ -41,7 +40,6 @@ public class Drive extends Command {
   @Override
   public void execute() {
     //m_Drive.arcadeDrive(-dController.getLeftY(), dController.getRightX());
-
     // Sets error margin to combat stick drift
     double axis1 = MathUtil.applyDeadband(dController.getLeftY(), 0.25);
     double axis2 = MathUtil.applyDeadband(dController.getRightX(), 0.25);
@@ -49,9 +47,10 @@ public class Drive extends Command {
   }
   public void autoDrive(){
 
-    //if(startTime - Timer.getFPGATimestamp() < 3){
+    if(startTime - Timer.getFPGATimestamp() < 10){
     //  m_Drive.arcadeDrive(1, 1);
-    //}
+    m_Drive.tank(1,1, 1, 1);
+    }
   }
 
   // Called once the command ends or is interrupted.

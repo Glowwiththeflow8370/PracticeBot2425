@@ -20,12 +20,13 @@ public class Shooter extends SubsystemBase {
   }
 
   public void Shoot(){
-    //System.out.println(outPut);
+    System.out.println(outPut);
   }
 
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
-    //System.out.println("Test");
+
+    // No u
   }
 }

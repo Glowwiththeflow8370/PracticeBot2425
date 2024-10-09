@@ -35,13 +35,13 @@ public class DT extends SubsystemBase {
     leftFront.setInverted(true);
     leftBack.setInverted(true); 
 
-    rightFront.setSmartCurrentLimit(30);
-    rightBack.setSmartCurrentLimit(30);
+    rightFront.setSmartCurrentLimit(80);
+    rightBack.setSmartCurrentLimit(80);
 
+    leftFront.setSmartCurrentLimit(80);
+    leftBack.setSmartCurrentLimit(80);
 
-    leftFront.setSmartCurrentLimit(30);
-    leftBack.setSmartCurrentLimit(30);
-
+    // Set idle mode
     rightFront.setIdleMode(IdleMode.kCoast);
     rightBack.setIdleMode(IdleMode.kCoast);
     leftFront.setIdleMode(IdleMode.kCoast);
@@ -60,8 +60,8 @@ public class DT extends SubsystemBase {
   public void tank(double rfOut, double lfOut, double rbOut, double lbOut) {
     rightFront.set(rfOut*2);
     rightBack.set(lfOut*2);
-    leftFront.set(-rbOut*2);
-    leftBack.set(-lbOut*2);
+    leftFront.set(rbOut*2);
+    leftBack.set(lbOut*2);
   }
 
   // Note to self: Figure out how to use Encoders :P

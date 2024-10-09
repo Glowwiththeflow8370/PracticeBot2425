@@ -5,6 +5,14 @@
         "header": {
           "open": true
         }
+      },
+      "SPARK MAX [2]": {
+        "header": {
+          "open": true
+        }
+      },
+      "window": {
+        "visible": false
       }
     }
   },
