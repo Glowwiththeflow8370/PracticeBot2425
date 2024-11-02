@@ -10,9 +10,14 @@
         "header": {
           "open": true
         }
+      }
+    },
+    "RoboRIO": {
+      "RoboRIO Input": {
+        "open": true
       },
       "window": {
-        "visible": false
+        "visible": true
       }
     }
   },

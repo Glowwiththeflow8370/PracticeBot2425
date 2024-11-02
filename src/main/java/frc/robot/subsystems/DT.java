@@ -4,9 +4,14 @@
 
 package frc.robot.subsystems;
 
+import edu.wpi.first.wpilibj2.command.Command;
 //import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+
+import java.beans.Encoder;
+
 import com.revrobotics.CANSparkMax;
+import com.revrobotics.RelativeEncoder;
 import com.revrobotics.CANSparkBase.IdleMode;
 import com.revrobotics.CANSparkLowLevel.MotorType;
 
@@ -30,7 +35,7 @@ public class DT extends SubsystemBase {
     rightBack = new CANSparkMax(MotorIDs.k_RightBackMotorPort, MotorType.kBrushless);
     leftFront = new CANSparkMax(MotorIDs.k_LeftFrontMotorPort, MotorType.kBrushless);
     leftBack = new CANSparkMax(MotorIDs.k_LeftBackMotorPort, MotorType.kBrushless);
-
+   
     // Invert output of left motors
     leftFront.setInverted(true);
     leftBack.setInverted(true); 
@@ -64,6 +69,9 @@ public class DT extends SubsystemBase {
     leftBack.set(lbOut*2);
   }
 
+  public void driveForward(){
+    tank(1, 1, 1, 1);
+  }
   // Note to self: Figure out how to use Encoders :P
 
   @Override
