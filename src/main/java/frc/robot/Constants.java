@@ -23,4 +23,9 @@ public final class Constants {
     public static final int k_LeftFrontMotorPort = 3;
     public static final int k_LeftBackMotorPort = 4;
   }
+  public static class DrivetrainConstants{
+    // # we will be cooked if we use swerve lol
+    public static final int CurrentLimit = 40;
+    public static final int Multiplier = 1;
+  }
 }

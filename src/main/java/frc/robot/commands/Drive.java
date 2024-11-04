@@ -47,7 +47,9 @@ public class Drive extends Command {
     // Sets error margin to combat stick drift
     axis1 = MathUtil.applyDeadband(dController.getLeftY(), 0.25);
     axis2 = MathUtil.applyDeadband(-dController.getRightX(), 0.25, 0.50);
-    m_Drive.tank((axis1 - axis2), (axis1 - axis2), (axis1 + axis2), (axis1 + axis2));
+    //m_Drive.tank((axis1 - axis2), (axis1 - axis2), (axis1 + axis2), (axis1 + axis2));
+    // Hopefully this works lol
+    m_Drive.tank((axis1 - axis2), (axis1 + axis2));
     SmartDashboard.putNumber("X axis", axis2);
     SmartDashboard.putNumber("Y axis", axis1);
   }

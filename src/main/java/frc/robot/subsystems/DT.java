@@ -5,10 +5,7 @@
 package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj2.command.Command;
-//import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-
-import java.beans.Encoder;
 
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.RelativeEncoder;
@@ -17,6 +14,7 @@ import com.revrobotics.CANSparkLowLevel.MotorType;
 
 // Constants import
 import frc.robot.Constants.MotorIDs;
+import frc.robot.Constants.DrivetrainConstants;
 
 public class DT extends SubsystemBase {
   /** Creates a new DT. */
@@ -27,6 +25,7 @@ public class DT extends SubsystemBase {
   private final CANSparkMax leftFront;
   private final CANSparkMax leftBack;
 
+  private RelativeEncoder rightFrontEncoder;
   //private final DifferentialDrive m_Drive;
 
   public DT() {
@@ -35,16 +34,24 @@ public class DT extends SubsystemBase {
     rightBack = new CANSparkMax(MotorIDs.k_RightBackMotorPort, MotorType.kBrushless);
     leftFront = new CANSparkMax(MotorIDs.k_LeftFrontMotorPort, MotorType.kBrushless);
     leftBack = new CANSparkMax(MotorIDs.k_LeftBackMotorPort, MotorType.kBrushless);
-   
+    
+    // Im putting everything into methods because I am lazy and wish not
+    // to deal with a wall of code in the constructor : )
+    // Thanki for the understandings
+    configMotors();
+    configEncoders();
+  }
+
+  public void configMotors(){
     // Invert output of left motors
     leftFront.setInverted(true);
     leftBack.setInverted(true); 
 
-    rightFront.setSmartCurrentLimit(80);
-    rightBack.setSmartCurrentLimit(80);
+    rightFront.setSmartCurrentLimit(40);
+    rightBack.setSmartCurrentLimit(40);
 
-    leftFront.setSmartCurrentLimit(80);
-    leftBack.setSmartCurrentLimit(80);
+    leftFront.setSmartCurrentLimit(40);
+    leftBack.setSmartCurrentLimit(40);
 
     // Set idle mode
     rightFront.setIdleMode(IdleMode.kCoast);
@@ -58,21 +65,36 @@ public class DT extends SubsystemBase {
     leftFront.burnFlash();
     leftBack.burnFlash();
   }
+
+  public void configEncoders(){
+    // Note to self: Figure out how to use Encoders :P
+    rightFrontEncoder = rightFront.getEncoder();
+    // ^ BEHOLD, AN ENCODER (Which for some reason does not like to
+    // be final :( )
+  }
+  
   // Drive method
-
-
   // This is most likely redundant?
-  public void tank(double rfOut, double lfOut, double rbOut, double lbOut) {
+  // public void tank(double rfOut, double lfOut, double rbOut, double lbOut) {
+  //   rightFront.set(rfOut*2);
+  //   rightBack.set(lfOut*2);
+  //   leftFront.set(rbOut*2);
+  //   leftBack.set(lbOut*2);
+  // }
+
+  public void tank(double rfOut, double lfOut) {
+    // In theory this should have the same function as the
+    // Above code, however, it requires less parameters
+    // Therefore simplifying its declaration
     rightFront.set(rfOut*2);
-    rightBack.set(lfOut*2);
-    leftFront.set(rbOut*2);
-    leftBack.set(lbOut*2);
+    rightBack.follow(rightFront);
+    leftFront.set(lfOut*1);
+    leftBack.follow(leftFront);
   }
 
   public void driveForward(){
-    tank(1, 1, 1, 1);
+    tank(1, 1);
   }
-  // Note to self: Figure out how to use Encoders :P
 
   @Override
   public void periodic() {
