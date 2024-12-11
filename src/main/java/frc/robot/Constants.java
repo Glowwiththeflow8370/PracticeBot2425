@@ -18,6 +18,7 @@ public final class Constants {
     public static final int kDriverControllerPort = 0;
   }
   public static class MotorIDs{
+    // Check rev hardware config :P
     public static final int k_RightFrontMotorPort = 1;
     public static final int k_RightBackMotorPort = 2;
     public static final int k_LeftFrontMotorPort = 3;

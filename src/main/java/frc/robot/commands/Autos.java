@@ -10,8 +10,10 @@ import edu.wpi.first.wpilibj2.command.Command;
 // Note: Figure out how to use this :p
 public final class Autos {
   /** Example static factory for an autonomous command. */
-  public static Command autoDriveCommand(Command autoDriveCommand) {
-    return autoDriveCommand;
+
+  // I have no clue if we are gon use this?
+  public static Command DriveForwardCommand(Command DriveForward) {
+    return DriveForward;
   }
 
   private Autos() {

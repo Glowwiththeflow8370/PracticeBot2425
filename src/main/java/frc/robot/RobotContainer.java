@@ -7,7 +7,9 @@ package frc.robot;
 import frc.robot.Constants.OperatorConstants;
 import frc.robot.commands.Drive;
 import frc.robot.commands.Shoot;
-import frc.robot.commands.autoDrive;
+import frc.robot.commands.DriveForward;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
@@ -24,13 +26,29 @@ public class RobotContainer {
   // Declare The Controller object
   private final CommandPS4Controller m_driverController =
       new CommandPS4Controller(OperatorConstants.kDriverControllerPort);
-  Shoot m_Shoot;
+  
+  // Create Commands
+  private final Shoot m_Shoot;
   Drive m_Drive;
+  private final Command DriveForward;
+  // Create a Selectable chooser (for autonomous)
+  SendableChooser<Command> AutoChooser = new SendableChooser<>();
+
   // BOI THIS IS LITERALY A CONSTRUCTER WDYM IT STORES STUFF
   public RobotContainer() {
-    // Configure Commands
+    // Configure Commands, this one is the command that allows for the robot
+    // to be controlled by a controller
     Robot.m_DriveDT.setDefaultCommand(new Drive(Robot.m_DriveDT, m_driverController));
+    // Configure Some more Commands
     m_Shoot = new Shoot();
+    DriveForward = new DriveForward(3, 1, Robot.m_DriveDT);
+
+    // This should be for the Auton Stuff (Just need to make it work)
+    AutoChooser.setDefaultOption("Drive Forward", DriveForward);
+    // This second one wont work : P
+    AutoChooser.addOption("Shoot", m_Shoot);
+    SmartDashboard.putData(AutoChooser);
+
     configureBindings();
   }
 
@@ -41,7 +59,7 @@ public class RobotContainer {
   }
 
   public Command getAutonomousCommand() {
-    // An example command will be run in autonomous
-    return new SequentialCommandGroup(new autoDrive(Robot.m_DriveDT));
+    // Whatever command is chosen will get run
+    return AutoChooser.getSelected();
   }
 }

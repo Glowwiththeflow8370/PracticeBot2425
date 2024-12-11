@@ -50,6 +50,8 @@ public class Drive extends Command {
     //m_Drive.tank((axis1 - axis2), (axis1 - axis2), (axis1 + axis2), (axis1 + axis2));
     // Hopefully this works lol
     m_Drive.tank((axis1 - axis2), (axis1 + axis2));
+
+    // Some more debug stuff (to be put on smart dash)
     SmartDashboard.putNumber("X axis", axis2);
     SmartDashboard.putNumber("Y axis", axis1);
   }

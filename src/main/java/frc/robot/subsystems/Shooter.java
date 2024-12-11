@@ -14,13 +14,13 @@ public class Shooter extends SubsystemBase {
   // Right now imma make it send an output when a button is pressed
 
   // Output button thing
-  String outPut;
+  String output;
   public Shooter() {
-    outPut = "Shooter Engaged";
+    output = "Shooter Engaged";
   }
 
   public void Shoot(){
-    System.out.println(outPut);
+    System.out.println(output);
   }
 
   @Override
